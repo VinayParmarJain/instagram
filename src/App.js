@@ -98,7 +98,11 @@ function App() {
   return (
     <div className="app">
 
-      <ImageUpload />
+    {user?.displayName ? (
+      <ImageUpload username={user.displayName} />
+    ):(
+      <h3>Sorry you need to Login to upload</h3>
+    )}
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
