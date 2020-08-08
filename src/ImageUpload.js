@@ -67,6 +67,7 @@ function ImageUpload({username}) {
           <input type="text" placeholder="Enter a caption..."  onChange={e => setCaption(e.target.value)} value={caption}/>
           <input type="file" onChange={handleChange} />
           <Button onClick={handleUpload}>Upload</Button>
+
         </div>
     )
 }
