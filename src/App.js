@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-
   const [posts, setPosts] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openSignIn, setOpenSignIn] = React.useState("");
@@ -60,7 +59,7 @@ function App() {
   }, [user, username]);
 
   React.useEffect(() => {
-    db.collection("posts").onSnapshot((snaphot) => {
+    db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snaphot) => {
       setPosts(
         snaphot.docs.map((doc) => ({
           id: doc.id,
@@ -96,14 +95,7 @@ function App() {
   };
 
   return (
-    <div className="app">
-
-    {user?.displayName ? (
-      <ImageUpload username={user.displayName} />
-    ):(
-      <h3>Sorry you need to Login to upload</h3>
-    )}
-
+    <div className="app"> 
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
@@ -179,8 +171,7 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt=""
         />
-      </div>
-
+        
       {user ? (
         <Button onClick={() => auth.signOut()}>Logout</Button>
       ) : (
@@ -190,7 +181,7 @@ function App() {
         </div>
       )}
 
-      <h1>Hello</h1>
+      </div>
 
       {posts.map(({ id, post }) => (
         <Post
@@ -200,6 +191,13 @@ function App() {
           imageUrl={post.imageUrl}
         />
       ))}
+
+      
+    {user?.displayName ? (
+      <ImageUpload username={user.displayName} />
+    ):(
+      <h3>Sorry you need to Login to upload</h3>
+    )}
     </div>
   );
 }
