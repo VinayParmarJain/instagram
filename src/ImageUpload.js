@@ -13,9 +13,9 @@ function ImageUpload({username}) {
             setImage(e.target.files[0]);
         }
     };
-
     const handleUpload = () => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        console.log(uploadTask)
 
         uploadTask.on(
             "state_changed",
@@ -35,7 +35,7 @@ function ImageUpload({username}) {
                 // final upload
                 storage
                 .ref("images")
-                .child("image.name")
+                .child(image.name)
                 .getDownloadURL()
                 .then(url => {
                     // post image inside db
